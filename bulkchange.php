@@ -28,19 +28,19 @@ require_once(dirname(__FILE__).'/lib.php');
 
 $id = required_param('id', PARAM_INT); // Course_module ID.
 $formaction = required_param('formaction', PARAM_LOCALURL);
-$userids = optional_param('userids', array(), PARAM_TEXT);
+$userids = optional_param('userids', [], PARAM_TEXT);
 $confirm = optional_param('confirm', 0, PARAM_INT);
 
 $cm = get_coursemodule_from_id('reengagement', $id, 0, false, MUST_EXIST);
-$course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
-$reengagement = $DB->get_record('reengagement', array('id' => $cm->instance), '*', MUST_EXIST);
+$course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
+$reengagement = $DB->get_record('reengagement', ['id' => $cm->instance], '*', MUST_EXIST);
 
 $default = new moodle_url('/mod/reengagement/view.php', ['id' => $cm->id]);
 $returnurl = new moodle_url(optional_param('returnto', $default, PARAM_URL));
 
 require_sesskey(); // This is an action script.
 
-$PAGE->set_url('/mod/reengagement/view.php', array('id' => $id, 'formaction' => $formaction));
+$PAGE->set_url('/mod/reengagement/view.php', ['id' => $id, 'formaction' => $formaction]);
 
 require_login($course, true, $cm);
 
@@ -179,8 +179,8 @@ if (!empty($formaction) && !empty($users)) {
         print '</table>';
 
         $yesurl = new moodle_url('/mod/reengagement/bulkchange.php');
-        $yesparams = array('id' => $cm->id, 'formaction' => $formaction,
-            'userids' => implode(',', $userids), 'confirm' => 1);
+        $yesparams = ['id' => $cm->id, 'formaction' => $formaction,
+            'userids' => implode(',', $userids), 'confirm' => 1];
         if ($formaction == 'resetbyspecificdate2') {
             // Add timestamp to form.
             $yesparams['timestamp'] = $timestamp;

@@ -138,7 +138,7 @@ function xmldb_reengagement_upgrade($oldversion=0) {
              LEFT JOIN {course_modules_completion} cmc ON cmc.coursemoduleid = cm.id AND cmc.userid = rin.userid
                  WHERE m.name = 'reengagement' AND cmc.id is null
                        AND rin.completiontime < ? AND rin.completed = 0";
-        $missingprogress = $DB->get_recordset_sql($sql, array($timenow));
+        $missingprogress = $DB->get_recordset_sql($sql, [$timenow]);
 
         foreach ($missingprogress as $missing) {
             // Add course completion record.
@@ -158,7 +158,7 @@ function xmldb_reengagement_upgrade($oldversion=0) {
                 // Delete inprogress record.
                 debugging('', DEBUG_DEVELOPER) && mtrace("mode $missing->emailuser reengagementid $missing->id.
                       User marked complete, deleting inprogress record for user $missing->userid");
-                $DB->delete_records('reengagement_inprogress', array('id' => $missing->id));
+                $DB->delete_records('reengagement_inprogress', ['id' => $missing->id]);
             } else {
                 // Update inprogress record to indicate completion done.
                 debugging('', DEBUG_DEVELOPER) && mtrace("mode $missing->emailuser reengagementid $missing->id

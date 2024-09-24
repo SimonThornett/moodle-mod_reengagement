@@ -57,7 +57,7 @@ class restore_reengagement_activity_task extends restore_activity_task {
      * processed by the link decoder
      */
     public static function define_decode_contents() {
-        $contents = array();
+        $contents = [];
 
         $contents[] = new restore_decode_content('reengagement', 'emailcontent');
         $contents[] = new restore_decode_content('reengagement', 'emailcontentmanager');
@@ -71,7 +71,7 @@ class restore_reengagement_activity_task extends restore_activity_task {
      * to the activity to be executed by the link decoder
      */
     public static function define_decode_rules() {
-        $rules = array();
+        $rules = [];
 
         $rules[] = new restore_decode_rule('STANDDOWNVIEWBYID', '/mod/reengagement/view.php?id=$1', 'course_module');
         $rules[] = new restore_decode_rule('STANDDOWNINDEX', '/mod/reengagement/index.php?id=$1', 'course');
@@ -87,7 +87,7 @@ class restore_reengagement_activity_task extends restore_activity_task {
      * of {@see restore_log_rule} objects
      */
     public static function define_restore_log_rules() {
-        $rules = array();
+        $rules = [];
 
         return $rules;
     }
@@ -103,7 +103,7 @@ class restore_reengagement_activity_task extends restore_activity_task {
      * activity level. All them are rules not linked to any module instance (cmid = 0)
      */
     public static function define_restore_log_rules_for_course() {
-        $rules = array();
+        $rules = [];
 
         // Fix old wrong uses (missing extension).
         $rules[] = new restore_log_rule('reengagement', 'view all', 'index?id={course}', null,
@@ -122,7 +122,7 @@ class restore_reengagement_activity_task extends restore_activity_task {
         global $DB;
         $id = $this->get_activityid();
         $course = $this->get_courseid();
-        $reengagement = $DB->get_record('reengagement', array('id' => $id));
+        $reengagement = $DB->get_record('reengagement', ['id' => $id]);
         if (empty($reengagement)) {
             // Unexpected, but nothing needs doing.
             return;

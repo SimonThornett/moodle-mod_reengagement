@@ -28,7 +28,7 @@ require_once(dirname(__FILE__).'/lib.php');
 
 $id = required_param('id', PARAM_INT);
 
-$course = $DB->get_record('course', array('id' => $id), '*', MUST_EXIST);
+$course = $DB->get_record('course', ['id' => $id], '*', MUST_EXIST);
 
 require_login($course);
 
@@ -36,7 +36,7 @@ require_login($course);
 $strreengagements = get_string('modulenameplural', 'reengagement');
 $strreengagement  = get_string('modulename', 'reengagement');
 
-$params = array();
+$params = [];
 
 $params['id'] = $id;
 
@@ -48,9 +48,9 @@ $PAGE->set_title(format_string($strreengagements));
 $PAGE->set_heading(format_string($course->fullname));
 
 // Add the page view to the Moodle log.
-$event = \mod_reengagement\event\course_module_instance_list_viewed::create(array(
-    'context' => context_course::instance($course->id)
-));
+$event = \mod_reengagement\event\course_module_instance_list_viewed::create([
+    'context' => context_course::instance($course->id),
+]);
 $event->add_record_snapshot('course', $course);
 $event->trigger();
 
@@ -77,11 +77,11 @@ $table = new html_table();
 $table->attributes['class'] = 'generaltable mod_index';
 
 if ($usesections) {
-    $table->head  = array ($strsectionname, $strname);
-    $table->align = array ('center', 'left', 'left');
+    $table->head  = [$strsectionname, $strname];
+    $table->align = ['center', 'left', 'left'];
 } else {
-    $table->head  = array ($strlastmodified, $strname);
-    $table->align = array ('left', 'left', 'left');
+    $table->head  = [$strlastmodified, $strname];
+    $table->align = ['left', 'left', 'left'];
 }
 
 
@@ -106,9 +106,9 @@ foreach ($reengagements as $reengagement) {
 
     $class = $reengagement->visible ? '' : 'class="dimmed"'; // Hidden modules are dimmed.
 
-    $table->data[] = array (
+    $table->data[] = [
         $printsection,
-        "<a $class href=\"view.php?id=$cm->id\">".format_string($reengagement->name)."</a>");
+        "<a $class href=\"view.php?id=$cm->id\">".format_string($reengagement->name)."</a>"];
 }
 
 echo html_writer::table($table);

@@ -63,7 +63,7 @@ class custom_completion extends activity_custom_completion {
      */
     public function get_custom_rule_descriptions(): array {
         return [
-            'duration' => get_string('duration', 'reengagement')
+            'duration' => get_string('duration', 'reengagement'),
         ];
     }
 

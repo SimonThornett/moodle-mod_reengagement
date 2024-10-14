@@ -347,4 +347,24 @@ class reengagement_participants extends \core_user\table\participants {
     public function guess_base_url(): void {
         $this->baseurl = new moodle_url('/mod/reengagement/view.php', ['id' => $this->cmid]);
     }
+
+    /**
+     * Get the context of the current table.
+     *
+     * Note: This function should not be called until after the filterset has been provided.
+     *
+     * @return context
+     */
+    public function get_context(): context {
+        return $this->context;
+    }
+
+    /**
+     * Check if the user has the capability to access this table.
+     *
+     * @return bool Return true if capability check passed.
+     */
+    public function has_capability(): bool {
+        return has_capability('mod/reengagement:addinstance', $this->get_context());
+    }
 }
